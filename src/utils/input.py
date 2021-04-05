@@ -1,4 +1,4 @@
-from matrix import *
+from src.utils.matrix import *
 
 
 def input_matrix():

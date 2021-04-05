@@ -1,5 +1,5 @@
 from random import randint, random
-from accuracy import *
+from src.utils.accuracy import *
 
 
 class Matrix:
