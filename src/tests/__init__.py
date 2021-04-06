@@ -5,6 +5,7 @@ from src.givens_rotation import *
 from src.householder_transformation import *
 from src.qr_algorithms import *
 from src.tridiagonal import *
+from src.graph_algorithms import *
 import random
 
 eps = 1e-14
@@ -72,6 +73,43 @@ def fast_qr_algo_test(A):
     print("Fast QR Algorithm test: OK")
 
 
+def gen_random_shuffle_matrix(n):
+    p = [i for i in range(n)]
+    random.shuffle(p)
+    P = Matrix.zero(n, n)
+    rP = Matrix.zero(n, n)
+    for i in range(n):
+        P[i][p[i]] = 1
+        rP[p[i]][i] = 1
+    assert (P * rP == Matrix.unit(n))
+    return P, rP
+
+
+def shuffle_matrix(A):
+    P, rP = gen_random_shuffle_matrix(A.width)
+    return P * A * rP
+
+
+def isomorphism_test(A, B, exp):
+    assert (check_isomorphism(A, A) == 1)
+    assert (check_isomorphism(B, B) == 1)
+    assert (check_isomorphism(A, B) == exp)
+    C = shuffle_matrix(A)
+    assert (check_isomorphism(A, C) == 1)
+    C = shuffle_matrix(B)
+    assert (check_isomorphism(B, C) == 1)
+
+    print("Isomorphism test: OK")
+
+
+def expanders_test():
+    A = build_nxn(2)
+    assert (eq(count_alpha(A), 0.5))
+    A = build_p_inf(2)
+    assert (eq(count_alpha(A), 0.57735027))
+    print("Expanders test: OK")
+
+
 def run_all_tests():
     A = Matrix([
         [0.4, 0],
@@ -105,6 +143,27 @@ def run_all_tests():
     qr_dec_test(B, qr_tridiagonal)
     qr_algo_test(B, qr_tridiagonal)
     fast_qr_algo_test(B)
+
+    C = Matrix([
+        [1, 1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 0],
+        [0, 0, 1, 0, 0, 1],
+        [0, 0, 1, 0, 0, 1],
+        [0, 0, 0, 1, 1, 0]
+    ])
+    D = Matrix([
+        [0, 1, 1, 0, 0, 0],
+        [1, 0, 0, 1, 0, 0],
+        [1, 0, 0, 0, 1, 0],
+        [0, 1, 0, 0, 0, 1],
+        [0, 0, 1, 0, 1, 0],
+        [0, 0, 0, 1, 0, 0]
+    ])
+
+    isomorphism_test(C, D, 0)
+
+    expanders_test()
 
     print("-------------")
     print("All tests: OK")

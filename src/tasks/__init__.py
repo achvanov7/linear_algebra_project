@@ -5,6 +5,7 @@ from src.givens_rotation import *
 from src.householder_transformation import *
 from src.qr_algorithms import *
 from src.tridiagonal import *
+from src.graph_algorithms import *
 
 
 def print_ans(x):
@@ -128,7 +129,27 @@ def task_11():
     ])
 
 
-all_tasks = [task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8, task_9, task_10, task_11]
+def task_12():
+    A = input_matrix()
+    B = input_matrix()
+    res = check_isomorphism(A, B)
+    print_ans([
+        ("Isomorphism result", res)
+    ])
+
+
+def task_13():
+    print("Enter two numbers - n, p: ")
+    n, p = map(int, input().split())
+    a1 = count_alpha(build_nxn(n))
+    a2 = count_alpha(build_p_inf(p))
+    print_ans([
+        ("alpha_1", a1),
+        ("alpha_2", a2),
+    ])
+
+
+all_tasks = [task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8, task_9, task_10, task_11, task_12, task_13]
 
 
 def run_all_tasks():
