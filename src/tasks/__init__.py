@@ -3,6 +3,8 @@ from src.simple_iteration import *
 from src.gauss_zeidel import *
 from src.givens_rotation import *
 from src.householder_transformation import *
+from src.qr_algorithms import *
+from src.tridiagonal import *
 
 
 def print_ans(x):
@@ -87,7 +89,46 @@ def task_7():
         ])
 
 
-all_tasks = [task_1, task_2, task_3, task_4, task_5, task_6, task_7]
+def task_8():
+    A = input_matrix()
+    eps = input_accuracy()
+    eigens, Q = qr_algo(A, eps)
+    print_ans([
+        ("Eigen Values", eigens),
+        ("Q_k", Q)
+    ])
+
+
+def task_9():
+    A = input_matrix()
+    B, Q = tridiagonalize(A)
+    print_ans([
+        ("A'", B),
+        ("Q", Q)
+    ])
+
+
+def task_10():
+    A = input_matrix()
+    eps = input_accuracy()
+    eigens, Q = qr_algo(A, eps, qr_tridiagonal)
+    print_ans([
+        ("Eigen Values", eigens),
+        ("Q_k", Q)
+    ])
+
+
+def task_11():
+    A = input_matrix()
+    eps = input_accuracy()
+    eigens, Q = fast_qr_algo(A, eps)
+    print_ans([
+        ("Eigen Values", eigens),
+        ("Q_k", Q)
+    ])
+
+
+all_tasks = [task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8, task_9, task_10, task_11]
 
 
 def run_all_tasks():

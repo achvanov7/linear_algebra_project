@@ -3,6 +3,8 @@ from src.simple_iteration import *
 from src.gauss_zeidel import *
 from src.givens_rotation import *
 from src.householder_transformation import *
+from src.qr_algorithms import *
+from src.tridiagonal import *
 import random
 
 eps = 1e-14
@@ -45,6 +47,31 @@ def simple_iteration_test(A):
     print("Simple Iteration test: OK")
 
 
+def qr_algo_test(A, qr_dec=qr_givens):
+    ev, Q = qr_algo(A, eps, qr_dec)
+
+    for i in range(Q.width):
+        e_vector = Matrix.vector([Q[j][i] for j in range(Q.height)])
+        assert (A * e_vector == ev[i] * e_vector)
+    print(f"QR Algorithm {qr_dec.__name__} test: OK")
+
+
+def tridiagonalization_test(A):
+    B, Q = tridiagonalize(A)
+    B.tridiagonal()
+    assert (Q.transpose() * A * Q == B)
+    return B
+
+
+def fast_qr_algo_test(A):
+    ev, Q = fast_qr_algo(A, eps)
+
+    for i in range(Q.width):
+        e_vector = Matrix.vector([Q[j][i] for j in range(Q.height)])
+        assert (A * e_vector == ev[i] * e_vector)
+    print("Fast QR Algorithm test: OK")
+
+
 def run_all_tests():
     A = Matrix([
         [0.4, 0],
@@ -64,6 +91,20 @@ def run_all_tests():
     qr_dec_test(A, qr_givens)
     qr_dec_test(A, qr_householder)
     simple_iteration_test(A)
+
+    A = Matrix([
+        [4, 1, 1, 0, 0],
+        [1, -1.1, 1, 2, -1],
+        [1, 1, -3, 0.02, 0.02],
+        [0, 2, 0.02, 0, 5],
+        [0, -1, 0.02, 5, -1]
+    ])
+
+    qr_algo_test(A)
+    B = tridiagonalization_test(A)
+    qr_dec_test(B, qr_tridiagonal)
+    qr_algo_test(B, qr_tridiagonal)
+    fast_qr_algo_test(B)
 
     print("-------------")
     print("All tests: OK")
