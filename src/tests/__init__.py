@@ -2,6 +2,7 @@ from src.utils import *
 from src.simple_iteration import *
 from src.gauss_zeidel import *
 from src.givens_rotation import *
+from src.householder_transformation import *
 import random
 
 eps = 1e-14
@@ -54,6 +55,7 @@ def run_all_tests():
         [0, 1, 0]
     ])
     qr_dec_test(A, qr_givens)
+    qr_dec_test(A, qr_householder)
 
     print("-------------")
     print("All tests: OK")

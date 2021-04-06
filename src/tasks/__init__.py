@@ -2,6 +2,7 @@ from src.utils import *
 from src.simple_iteration import *
 from src.gauss_zeidel import *
 from src.givens_rotation import *
+from src.householder_transformation import *
 
 
 def print_ans(x):
@@ -51,7 +52,25 @@ def task_4():
     ])
 
 
-all_tasks = [task_1, task_2, task_3, task_4]
+def task_5():
+    A = input_matrix()
+    v = input_vector()
+    HA = householder_mul(A, v)
+    print_ans([
+        ("Hv * A", HA)
+    ])
+
+
+def task_6():
+    A = input_matrix()
+    Q, R = qr_householder(A)
+    print_ans([
+        ("Q", Q),
+        ("R", R)
+    ])
+
+
+all_tasks = [task_1, task_2, task_3, task_4, task_5, task_6]
 
 
 def run_all_tasks():
