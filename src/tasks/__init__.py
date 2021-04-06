@@ -1,5 +1,6 @@
 from src.utils import *
 from src.simple_iteration import *
+from src.gauss_zeidel import *
 
 
 def print_ans(x):
@@ -18,7 +19,17 @@ def task_1():
     ])
 
 
-all_tasks = [task_1]
+def task_2():
+    A = input_matrix()
+    b = input_vector()
+    eps = input_accuracy()
+    x = gauss_zeidel(A, b, eps)
+    print_ans([
+        ("x", x)
+    ])
+
+
+all_tasks = [task_1, task_2]
 
 
 def run_all_tasks():
