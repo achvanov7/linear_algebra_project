@@ -8,10 +8,10 @@ import random
 eps = 1e-14
 
 
-def simple_iteration_test(A, b):
+def simple_iteration_method_test(A, b):
     x = simple_iteration_method(A, b, eps)
     assert (x == A * x + b)
-    print("Simple Iteration: OK")
+    print("Simple Iteration Method test: OK")
 
 
 def gauss_zeidel_test(A, b):
@@ -38,6 +38,13 @@ def qr_dec_test(A, qr_dec):
     print(f"{qr_dec.__name__} test: OK")
 
 
+def simple_iteration_test(A):
+    x = Matrix.random(A.width, 1)
+    k, v = simple_iteration(A, x, eps)
+    assert (A * v == k * v)
+    print("Simple Iteration test: OK")
+
+
 def run_all_tests():
     A = Matrix([
         [0.4, 0],
@@ -46,7 +53,7 @@ def run_all_tests():
     E = Matrix.unit(2)
     b = Matrix.vector([0.8, 0.43])
 
-    simple_iteration_test(E - A, b)
+    simple_iteration_method_test(E - A, b)
     gauss_zeidel_test(A, b)
 
     A = Matrix([
@@ -56,6 +63,7 @@ def run_all_tests():
     ])
     qr_dec_test(A, qr_givens)
     qr_dec_test(A, qr_householder)
+    simple_iteration_test(A)
 
     print("-------------")
     print("All tests: OK")

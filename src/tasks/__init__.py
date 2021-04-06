@@ -70,7 +70,24 @@ def task_6():
     ])
 
 
-all_tasks = [task_1, task_2, task_3, task_4, task_5, task_6]
+def task_7():
+    A = input_matrix()
+    x = input_vector()
+    eps = input_accuracy()
+    res = simple_iteration(A, x, eps)
+    if res == 0:
+        print_ans([
+            ("Fail", 0)
+        ])
+    else:
+        k, v = res
+        print_ans([
+            ("Eigen Value", k),
+            ("Eigen Vector", v)
+        ])
+
+
+all_tasks = [task_1, task_2, task_3, task_4, task_5, task_6, task_7]
 
 
 def run_all_tasks():
